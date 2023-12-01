@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { getUser } from "../api/product";
 import Spinner from "../components/Spiner";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/user-modal/userModalSlice";
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,6 +20,9 @@ const Login = () => {
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
+
+  const dispatch = useDispatch();
+
   const clickLogin = async () => {
     setLoading(true);
 
@@ -27,6 +33,7 @@ const Login = () => {
     if (checkUser) {
       sessionStorage.setItem("username", username);
       sessionStorage.setItem("password", password);
+      dispatch(setUser({ name: user.tenDangNhap, role: user.role }));
       setUsername(username);
       setPassword(password);
       console.log(user.ma);

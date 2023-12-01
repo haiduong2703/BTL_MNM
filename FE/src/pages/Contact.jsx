@@ -2,6 +2,7 @@ import { useState } from "react";
 import { sendRequest } from "../api/product";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const Contact = () => {
   const [inputNameValue, setInputNameValue] = useState("");
   const [inputPhoneValue, setInputPhoneValue] = useState("");
