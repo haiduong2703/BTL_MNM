@@ -9,8 +9,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [checkRegister, setCheckRegister] = useState(false);
   const [checkLogin, setCheckLogin] = useState(false);
-  const [checkUser, setCheckUser] = useState(false);
 
+  let checkUser = false;
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
   };
@@ -22,10 +22,13 @@ const Login = () => {
 
     const user = await getUser(username);
     if (username === user.tenDangNhap && password === user.matKhau) {
-      setCheckUser(true);
+      checkUser = true;
     }
     if (checkUser) {
       sessionStorage.setItem("username", username);
+      sessionStorage.setItem("fullname", user.hoTen);
+      sessionStorage.setItem("address", user.diaChi);
+      sessionStorage.setItem("phone", user.sdt);
       sessionStorage.setItem("password", password);
       setUsername(username);
       setPassword(password);
@@ -54,7 +57,7 @@ const Login = () => {
           <div className="col">
             <div className="formLogin">
               <h1>R E G I S T E R</h1>
-              <h3>Fullname</h3>
+              <h3>Họ và tên</h3>
               <input
                 type="text"
                 className="username"
@@ -63,7 +66,7 @@ const Login = () => {
               />
               <br />
 
-              <h3>Username</h3>
+              <h3>Tên đăng nhập</h3>
               <input
                 type="text"
                 className="username"
@@ -71,7 +74,7 @@ const Login = () => {
                 value={username}
               />
               <br />
-              <h3>Password</h3>
+              <h3>Mật khẩu</h3>
               <input
                 type="password"
                 className="password"
@@ -88,7 +91,7 @@ const Login = () => {
                 value={username}
               />
               <br />
-              <h3>Phone</h3>
+              <h3>Số điện thoại</h3>
               <input
                 type="text"
                 className="username"
@@ -96,7 +99,7 @@ const Login = () => {
                 value={username}
               />
               <br />
-              <h3>Address</h3>
+              <h3>Địa chỉ</h3>
               <input
                 type="text"
                 className="username"

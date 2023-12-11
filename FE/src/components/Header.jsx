@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/images/Logo-2.png";
 import { useHistory } from "react-router-dom";
-
+import searchicon from "../assets/images/searchicon.png";
 const mainNav = [
   {
     display: "Trang chủ",
@@ -29,10 +29,14 @@ const Header = () => {
 
   const headerRef = useRef(null);
   const [showSearchInput, setShowSearchInput] = useState(false);
+  const [keyword, setKeyword] = useState("");
 
   // Hàm xử lý khi click vào biểu tượng tìm kiếm
   const handleSearchIconClick = () => {
     setShowSearchInput(!showSearchInput); // Đảo ngược trạng thái hiển thị của ô input
+  };
+  const onChangeKeyWord = (e) => {
+    setKeyword(e.target.value);
   };
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -56,6 +60,11 @@ const Header = () => {
   const handleLogout = () => {
     sessionStorage.clear();
     history.push("/login");
+  };
+  const handleSearch = () => {
+    sessionStorage.setItem("keyword", keyword);
+    console.log(keyword);
+    history.push("/catalogSearch");
   };
 
   return (
@@ -95,15 +104,26 @@ const Header = () => {
           </div>
           <div className="header__menu__right">
             <div className="header__menu__item header__menu__right_item">
-              <i className="bx bx-search" onClick={handleSearchIconClick}></i>
+              {/* <i className="bx bx-search" onClick={handleSearchIconClick}></i>
 
-              {/* Thêm class 'show' khi showSearchInput là true */}
+              Thêm class 'show' khi showSearchInput là true */}
               <div
                 className={`header__menu__item__search-input ${
                   showSearchInput ? "show" : ""
                 }`}
               >
-                <input type="text" placeholder="Tìm kiếm..." />
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm..."
+                  value={keyword}
+                  onChange={onChangeKeyWord}
+                />
+
+                <img
+                  className="header__menu__item__search-input__search__icon"
+                  src={searchicon}
+                  onClick={handleSearch}
+                />
               </div>
             </div>
             <div className="header__menu__item header__menu__right_item">
@@ -113,21 +133,26 @@ const Header = () => {
             </div>
 
             <div className="header__menu__item header__menu__right_item">
-              <Link to="/login">
-                <i className="bx bx-user"></i>
-              </Link>
+              {sessionStorage.getItem("username") ? (
+                <Link to="/infor">
+                  <i className="bx bx-user"></i>
+                </Link>
+              ) : (
+                <Link to="/login">
+                  <i className="bx bx-user"></i>
+                </Link>
+              )}
             </div>
             <div className="header__menu__item header__menu__right_item">
               {sessionStorage.getItem("username") ? (
                 <i onClick={handleLogout} className="bx bx-log-out"></i>
               ) : (
-                <div></div>
+                <div className="header__menu__item header__menu__right_item">
+                  <Link to="/login">
+                    <i className="bx bx-log-in"></i>
+                  </Link>
+                </div>
               )}
-            </div>
-            <div className="header__menu__item header__menu__right_item">
-              <Link to="/login">
-                <i className="bx bx-log-in"></i>
-              </Link>
             </div>
           </div>
         </div>

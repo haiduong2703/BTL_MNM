@@ -152,14 +152,27 @@
         }
     }
 
-    &__search-input {
-        display   : none;
-        transition: all 0.3s ease; // Thời gian và kiểu chuyển động có thể điều chỉnh
 
-        &.show {
-            display: block;
-            /* Tùy chỉnh vị trí, kích thước và các thuộc tính khác của ô input khi nó hiển thị */
-        }
+}
+
+.header__menu__item__search-input {
+    position    : relative;
+    margin-right: 30px;
+
+    input {
+        height       : 40px;
+        width        : 350px;
+        border-radius: 15px;
+        padding-right: 30px;
+
     }
 
+    &__search__icon {
+        position : absolute;
+        top      : 50%;
+        right    : 5px;
+        transform: translateY(-50%);
+        width    : 30px;
+        height   : 30px;
+    }
 }
