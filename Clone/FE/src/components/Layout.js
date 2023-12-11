@@ -1,0 +1,78 @@
+import React, { useEffect } from "react";
+
+import { BrowserRouter, Route } from "react-router-dom";
+
+import Header from "./Header";
+import HeaderAdmin from "./HeaderAdmin";
+import Footer from "./Footer";
+
+import ProductViewModal from "./ProductViewModal";
+
+import Routes from "../routes/Routes";
+import { getUser } from "../api/product";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../redux/user-modal/userModalSlice";
+import RoutesAdmin from "../routes/RoutesAdmin";
+
+const Layout = () => {
+  const userName = sessionStorage.getItem("username");
+
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user);
+  let checkUser = true;
+  if (user.role === 2) {
+    console.log("abc");
+    checkUser = false;
+  }
+
+  useEffect(() => {
+    const handleLogin = async () => {
+      if (userName) {
+        const userLogin = await getUser(userName);
+        dispatch(
+          setUser({ name: userLogin.tenDangNhap, role: userLogin.role })
+        );
+        console.log("userLogin: ", userLogin);
+      }
+    };
+    handleLogin();
+  }, []);
+
+  return (
+    <BrowserRouter>
+      {checkUser ? (
+        <Route
+          render={(props) => (
+            <div>
+              {true && <Header {...props} />}
+              <div className="container">
+                <div className="main">
+                  <Routes />
+                </div>
+              </div>
+              <Footer />
+              <ProductViewModal />
+            </div>
+          )}
+        />
+      ) : (
+        <Route
+          render={(props) => (
+            <div>
+              {<HeaderAdmin {...props} />}
+              <div className="container">
+                <div className="main">
+                  <RoutesAdmin />
+                </div>
+              </div>
+              {/* <Footer /> */}
+              <ProductViewModal />
+            </div>
+          )}
+        />
+      )}
+    </BrowserRouter>
+  );
+};
+export default Layout;
