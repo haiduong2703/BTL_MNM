@@ -18,15 +18,25 @@ const AdminProduct = () => {
   const [isOpenModalCreate, setIsOpenModalCreate] = useState(false);
   const [isOpenModalEdit, setIsOpenModalEdit] = useState(false);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
-  const [stateUser, setStateUser] = useState({
-    name: "",
-    userName: "",
-    email: "",
-    password: "",
-    address: "",
-    phone: "",
-    status: false,
-    role: 1,
+  const [stateProduct, setStateProduct] = useState({
+    id: "",
+    title: "",
+    price: "",
+    categorySlug: "",
+    color: "",
+    slug: "",
+    size: "",
+    description: "",
+  });
+  const [stateProductDetail, setStateProductDetail] = useState({
+    id: "",
+    title: "",
+    price: "",
+    categorySlug: "",
+    color: "",
+    slug: "",
+    size: "",
+    description: "",
   });
   const [isRowSelected, setIsRowSelected] = useState("");
   const [isNameUser, setIsNameUser] = useState("");
@@ -46,65 +56,64 @@ const AdminProduct = () => {
 
   const user = useSelector((state) => state.user);
 
-  const [stateUserDetail, setStateUserDetail] = useState({
-    name: "",
-    userName: "",
-    email: "",
-    password: "",
-    address: "",
-    phone: "",
-    status: false,
-    role: 1,
-  });
-
   const [form] = Form.useForm();
 
   const data = [
     {
       key: "1",
-      name: "Trần Tùng",
-      email: "trantung310502@gmail.com",
-      phone: "0123456789",
-      address: "New York No. 1 Lake Park",
-      isAdmin: 1,
+      price: "189000",
+      title: "Áo thun Dinosaur 01",
+      categorySlug: "ao-thun",
+      color: "white, red, black",
+      slug: "ao-thun-dinosaur-01",
+      size: "s, m, l, xl",
+      description: "Áo khoắc Bomber"
     },
     {
       key: "2",
-      name: "Nguyen Van A",
-      email: "a@gmail.com",
-      phone: "0123456789",
-      address: "New York No. 1 Lake Park",
-      isAdmin: 1,
+      price: "189000",
+      title: "Áo thun Dinosaur 02",
+      categorySlug: "ao-thun",
+      color: "white, red, black",
+      slug: "ao-thun-dinosaur-01",
+      size: "s, m, l, xl",
+      description: "Áo khoắc Bomber"
     },
     {
       key: "3",
-      name: "Nguyen Van B",
-      email: "b@gmail.com",
-      phone: "0123456789",
-      address: "New York No. 1 Lake Park",
-      isAdmin: 1,
+      price: "189000",
+      title: "Áo thun Dinosaur 03",
+      categorySlug: "ao-thun",
+      color: "white, red, black",
+      slug: "ao-thun-dinosaur-01",
+      size: "s, m, l, xl",
+      description: "Áo khoắc Bomber"
     },
     {
       key: "4",
-      name: "Nguyen Van C",
-      email: "c@gmail.com",
-      phone: "0123456789",
-      address: "New York No. 1 Lake Park",
-      isAdmin: 1,
+      price: "189000",
+      title: "Áo thun Dinosaur 04",
+      categorySlug: "ao-thun",
+      color: "white, red, black",
+      slug: "ao-thun-dinosaur-01",
+      size: "s, m, l, xl",
+      description: "Áo khoắc Bomber"
     },
     {
       key: "5",
-      name: "Nguyen Van D",
-      email: "d@gmail.com",
-      phone: "0123456789",
-      address: "New York No. 1 Lake Park",
-      isAdmin: 1,
-    },
+      price: "189000",
+      title: "Áo thun Dinosaur 05",
+      categorySlug: "ao-thun",
+      color: "white, red, black",
+      slug: "ao-thun-dinosaur-01",
+      size: "s, m, l, xl",
+      description: "Áo khoắc Bomber"
+    }
   ];
 
   const handleOnChangeDetail = (e) => {
-    setStateUserDetail({
-      ...stateUserDetail,
+    setStateProductDetail({
+      ...stateProductDetail,
       [e.target.name]: e.target.value,
     });
   };
@@ -135,26 +144,32 @@ const AdminProduct = () => {
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      sorter: (a, b) => a?.name?.length - b?.name?.length,
+      title: "Title Product",
+      dataIndex: "title",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      sorter: (a, b) => a.email?.length - b.email?.length,
+      title: "Price",
+      dataIndex: "price",
     },
     {
-      title: "Phone",
-      dataIndex: "phone",
+      title: "Category Slug",
+      dataIndex: "categorySlug",
     },
     {
-      title: "Address",
-      dataIndex: "address",
+      title: "Color",
+      dataIndex: "color",
     },
     {
-      title: "Admin",
-      dataIndex: "isAdmin",
+      title: "Slug",
+      dataIndex: "slug",
+    },
+    {
+      title: "Size",
+      dataIndex: "size",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
     },
     {
       title: "Action",
@@ -174,8 +189,8 @@ const AdminProduct = () => {
   const onFinish = () => {};
 
   const handleOnChange = (e) => {
-    setStateUser({
-      ...stateUser,
+    setStateProduct({
+      ...stateProduct,
       [e.target.name]: e.target.value,
     });
   };
@@ -213,104 +228,121 @@ const AdminProduct = () => {
           form={form}
         >
           <Form.Item
-            label="Full name"
-            name="name"
+            label="Title Product"
+            name="title"
             rules={[
               {
                 required: true,
-                message: "Please input your full name!",
+                message: "Please input title product!",
               },
             ]}
           >
             <InputComponent
-              value={stateUser.name}
+              value={stateProduct.title}
               onChange={handleOnChange}
-              name="name"
+              name="title"
             />
           </Form.Item>
 
           <Form.Item
-            label="User name"
-            name="userName"
+            label="Price"
+            name="price"
             rules={[
               {
                 required: true,
-                message: "Please input your user name!",
+                message: "Please input price product!",
               },
             ]}
           >
             <InputComponent
-              value={stateUser.userName}
+              value={stateProduct.price}
               onChange={handleOnChange}
-              name="userName"
+              name="price"
             />
           </Form.Item>
 
           <Form.Item
-            label="Password"
-            name="password"
+            label="Category Slug"
+            name="categorySlug"
             rules={[
               {
                 required: true,
-                message: "Please input your password!",
+                message: "Please input category slug!",
               },
             ]}
           >
             <InputComponent
-              value={stateUser.password}
+              value={stateProduct.categorySlug}
               onChange={handleOnChange}
-              name="password"
+              name="categorySlug"
             />
           </Form.Item>
 
           <Form.Item
-            label="Email"
-            name="email"
+            label="Color"
+            name="color"
             rules={[
               {
                 required: true,
-                message: "Please input your email!",
+                message: "Please input color product!",
               },
             ]}
           >
             <InputComponent
-              value={stateUser.email}
+              value={stateProduct.color}
               onChange={handleOnChange}
-              name="email"
+              name="color"
             />
           </Form.Item>
 
           <Form.Item
-            label="Phone"
-            name="phone"
+            label="Slug"
+            name="slug"
             rules={[
               {
                 required: true,
-                message: "Please input your phone!",
+                message: "Please input slug!",
               },
             ]}
           >
             <InputComponent
-              value={stateUser.phone}
+              value={stateProduct.slug}
               onChange={handleOnChange}
-              name="phone"
+              name="slug"
             />
           </Form.Item>
 
           <Form.Item
-            label="Address"
-            name="address"
+            label="Size"
+            name="size"
             rules={[
               {
                 required: true,
-                message: "Please input your address!",
+                message: "Please input size product!",
               },
             ]}
           >
             <InputComponent
-              value={stateUser.address}
+              value={stateProduct.size}
               onChange={handleOnChange}
-              name="address"
+              name="size"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Description"
+            name="description"
+            rules={[
+              {
+                required: true,
+                message: "Please input description product!",
+              },
+            ]}
+          >
+            <InputComponent
+              value={stateProduct.description}
+              onChange={handleOnChange}
+              name="description"
             />
           </Form.Item>
 
@@ -366,104 +398,121 @@ const AdminProduct = () => {
             form={form}
           >
             <Form.Item
-              label="Full name"
-              name="name"
+              label="Title Product"
+              name="title"
               rules={[
                 {
                   required: true,
-                  message: "Please input your full name!",
+                  message: "Please input title product!",
                 },
               ]}
             >
               <InputComponent
-                value={stateUserDetail.name}
+                value={stateProductDetail.title}
                 onChange={handleOnChange}
-                name="name"
+                name="title"
               />
             </Form.Item>
 
             <Form.Item
-              label="User name"
-              name="userName"
+              label="Price"
+              name="price"
               rules={[
                 {
                   required: true,
-                  message: "Please input your user name!",
+                  message: "Please input price product!",
                 },
               ]}
             >
               <InputComponent
-                value={stateUserDetail.userName}
-                onChange={handleOnChangeDetail}
-                name="userName"
+                value={stateProductDetail.price}
+                onChange={handleOnChange}
+                name="price"
               />
             </Form.Item>
 
             <Form.Item
-              label="Password"
-              name="password"
+              label="Category Slug"
+              name="categorySlug"
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!",
+                  message: "Please input category slug!",
                 },
               ]}
             >
               <InputComponent
-                value={stateUserDetail.password}
-                onChange={handleOnChangeDetail}
-                name="password"
+                value={stateProductDetail.categorySlug}
+                onChange={handleOnChange}
+                name="categorySlug"
               />
             </Form.Item>
 
             <Form.Item
-              label="Email"
-              name="email"
+              label="Color"
+              name="color"
               rules={[
                 {
                   required: true,
-                  message: "Please input your email!",
+                  message: "Please input color product!",
                 },
               ]}
             >
               <InputComponent
-                value={stateUserDetail.email}
-                onChange={handleOnChangeDetail}
-                name="email"
+                value={stateProductDetail.color}
+                onChange={handleOnChange}
+                name="color"
               />
             </Form.Item>
 
             <Form.Item
-              label="Phone"
-              name="phone"
+              label="Slug"
+              name="slug"
               rules={[
                 {
                   required: true,
-                  message: "Please input your phone!",
+                  message: "Please input slug!",
                 },
               ]}
             >
               <InputComponent
-                value={stateUserDetail.phone}
-                onChange={handleOnChangeDetail}
-                name="phone"
+                value={stateProductDetail.slug}
+                onChange={handleOnChange}
+                name="slug"
               />
             </Form.Item>
 
             <Form.Item
-              label="Address"
-              name="address"
+              label="Size"
+              name="size"
               rules={[
                 {
                   required: true,
-                  message: "Please input your address!",
+                  message: "Please input size product!",
                 },
               ]}
             >
               <InputComponent
-                value={stateUserDetail.address}
-                onChange={handleOnChangeDetail}
-                name="address"
+                value={stateProductDetail.size}
+                onChange={handleOnChange}
+                name="size"
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Description"
+              name="description"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input description product!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateProductDetail.description}
+                onChange={handleOnChange}
+                name="description"
               />
             </Form.Item>
 

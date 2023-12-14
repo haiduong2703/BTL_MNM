@@ -8,6 +8,9 @@ import { removeUser } from "../../redux/user-modal/userModalSlice";
 import AdminProduct from "../../components/AdminProduct/AdminProduct";
 import { WrapperContent } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
+import AdminOrder from "../../components/AdminOrder/AdminOrder";
+import AdminContact from "../../components/AdminContact/AdminContact";
+
 const Admin = () => {
   const [keySelected, setKeySelected] = useState("");
   const dispatch = useDispatch();
@@ -18,8 +21,11 @@ const Admin = () => {
         return <AdminUser />;
       case "product":
         return <AdminProduct />;
+      case "order":
+        return <AdminOrder />;
+      case "contact":
+        return <AdminContact />;
       case "logout":
-
         sessionStorage.clear();
         dispatch(removeUser());
         history.push("/login");
@@ -32,6 +38,8 @@ const Admin = () => {
   const items = [
     getItem("Quản lý người dùng", "user", <UserOutlined />),
     getItem("Quản lý sản phẩm", "product", <AppstoreOutlined />),
+    getItem("Quản lý đơn hàng", "order", <AppstoreOutlined />),
+    getItem("Quản lý liên hệ", "contact", <AppstoreOutlined />),
     getItem("Đăng xuất", "logout", <LogoutOutlined />),
   ];
 
